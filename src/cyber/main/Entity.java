@@ -18,6 +18,18 @@ public abstract class Entity extends Instance {
 		draw();
 	}
 	
+	
+	
+	public void updatePhysics(){
+		x += dx;
+		y += dy;
+		z += dz;
+
+		dx = applyFriction(dx);
+        dy = applyFriction(dy);
+        dz = applyFriction(dz);
+	}
+	
 	 public float applyFriction(float axis){
 	      if(axis > 0){
 	          if(axis - friction < 0){
@@ -35,64 +47,6 @@ public abstract class Entity extends Instance {
 	      }
 	      return 0f;
 	    }
-	
-	public void updatePhysics(){
-		x += dx;
-		y += dy;
-		z += dz;
-		
-		/*if(dx > 0){
-			if(dx - friction < 0){
-				dx = 0;
-			}else{
-				dx -= friction;
-			}
-		}
-		
-		if(dx < 0){
-			if(dx + friction > 0){
-				dx = 0;
-			}else{
-				dx += friction;
-			}
-		}
-		
-		if(dy > 0){
-			if(dy - friction < 0){
-				dy = 0;
-			}else{
-				dy -= friction;
-			}
-		}
-		
-		if(dy < 0){
-			if(dy + friction > 0){
-				dy = 0;
-			}else{
-				dy += friction;
-			}
-		}
-		
-		if(dz < 0){
-			if(dz + friction > 0){
-				dz = 0;
-			}else{
-				dz += friction;
-			}
-		}
-		
-		if(dz > 0){
-			if(dz - friction < 0){
-				dz = 0;
-			}else{
-				dz -= friction;
-			}
-		}*/
-		
-		dx = applyFriction(dx);
-        dy = applyFriction(dy);
-        dz = applyFriction(dz);
-	}
 	
 	public void addForce(Vector3f vector){
 		dx += vector.getX();
