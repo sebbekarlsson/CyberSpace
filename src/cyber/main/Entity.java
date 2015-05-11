@@ -18,12 +18,30 @@ public abstract class Entity extends Instance {
 		draw();
 	}
 	
+	 public float applyFriction(float axis){
+	      if(axis > 0){
+	          if(axis - friction < 0){
+	              return 0;
+	          }else{
+	              return axis - friction;
+	          }
+	      }
+	      if(axis < 0){
+	          if(axis + friction > 0){ // Denna var fel
+	              return 0;
+	          }else{
+	              return axis + friction;
+	          }
+	      }
+	      return 0f;
+	    }
+	
 	public void updatePhysics(){
 		x += dx;
 		y += dy;
 		z += dz;
 		
-		if(dx > 0){
+		/*if(dx > 0){
 			if(dx - friction < 0){
 				dx = 0;
 			}else{
@@ -69,7 +87,11 @@ public abstract class Entity extends Instance {
 			}else{
 				dz -= friction;
 			}
-		}
+		}*/
+		
+		dx = applyFriction(dx);
+        dy = applyFriction(dy);
+        dz = applyFriction(dz);
 	}
 	
 	public void addForce(Vector3f vector){
