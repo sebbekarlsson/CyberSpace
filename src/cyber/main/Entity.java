@@ -39,7 +39,7 @@ public abstract class Entity extends Instance {
 	          }
 	      }
 	      if(axis < 0){
-	          if(axis + friction > 0){ // Denna var fel
+	          if(axis + friction > 0){
 	              return 0;
 	          }else{
 	              return axis + friction;
