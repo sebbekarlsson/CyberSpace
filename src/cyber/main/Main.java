@@ -1,27 +1,27 @@
 package cyber.main;
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
 import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.glu.GLU;
-import org.lwjgl.util.vector.Vector3f;
+
+import cyber.main.test.World;
 
 public class Main {
 	public static int WIDTH = 640;
 	public static int HEIGHT = 640 / 16 * 9;
 	public static int SCALE = 2;
-	public static ArrayList<Object> points = new ArrayList<Object>();
+	public static Dimension FRAMESIZE = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
 	public static Random random = new Random();
 	
-	public static Dimension FRAMESIZE = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
+	public static ArrayList<Scene> scenes = new ArrayList<Scene>();
+	public static int SCENEINDEX = 0;
 	
 	public static void main(String[] args){
 		new Main();
@@ -36,8 +36,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		Camera camera = new Camera();
+
 		
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -47,59 +46,34 @@ public class Main {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glLoadIdentity();
 
-
+		scenes.add(new World());
+		
 		while(!Display.isCloseRequested()){
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT );
 			GL11.glLoadIdentity();
-			GL11.glClearColor(0, 0, 0, 1);
 			
-			for(int i = 0; i < 255; i++)
-			points.add(new Object(camera.x-(random.nextFloat()*32)*Util.chooseInt(1,-1), camera.y-(random.nextFloat()*32)*Util.chooseInt(1,-1), camera.z-(random.nextFloat()*100), new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255))));
-
-			
-			//if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
-				camera.z -= 1f;
-			//}
-			if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
-				camera.z += 0.3f;
-			}
-			
-			if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-				camera.x -= 0.1f;
-			}
-			if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-				camera.x += 0.1f;
-			}
-			
-			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
-				camera.y += 0.1f;
-			}
+			Color color = getCurrentScene().backgroundColor;
+			GL11.glClearColor(color.getRed(), color.getGreen(), color.getBlue(), 1);
 			
 			
-			
+			Camera camera = getCurrentScene().camera;
 			
 			GL11.glPushMatrix();
 			GL11.glTranslatef(-camera.x, -camera.y, -camera.z);
 			GL11.glColor3f(1, 0, 0);
-			GL11.glBegin(GL11.GL_POINTS);
+			GL11.glPointSize((float) 2.0);
 			
+			GL11.glEnable(GL11.GL_TEXTURE_2D);
 			
-			for(int i = 0; i < points.size(); i++){
-				Object point = points.get(i);
-				
-				
-				GL11.glColor3f((float)point.color.getRed()/255, (float)point.color.getGreen()/255, (float)point.color.getBlue()/255);
-
-				GL11.glVertex3f((float)point.x, (float)point.y, (float)point.z);
-				
-				if(point.z > camera.z){
-					points.remove(point);
-				}
-				
+			if(getCurrentScene().init == false){
+				getCurrentScene().init();
+				getCurrentScene().init = true;
 			}
 			
-			GL11.glEnd();
-			
+			getCurrentScene().update();
+		
+			GL11.glDisable(GL11.GL_TEXTURE_2D);
+	
 			GL11.glPopMatrix();
 			
 			
@@ -108,5 +82,9 @@ public class Main {
 			Display.sync(60);
 			Display.update();
 		}
+	}
+	
+	public static Scene getCurrentScene(){
+		return scenes.get(SCENEINDEX);
 	}
 }
