@@ -1,9 +1,11 @@
 package cyber.main;
 
 import java.awt.Dimension;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -11,6 +13,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.glu.GLU;
 
+import cyber.main.entities.Player;
 import cyber.main.test.World;
 
 public class Main {
@@ -45,6 +48,8 @@ public class Main {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.5f);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
+		
+	
 		GL11.glLoadIdentity();
 
 		scenes.add(new World());
@@ -54,14 +59,16 @@ public class Main {
 			GL11.glLoadIdentity();
 			
 			Color color = getCurrentScene().backgroundColor;
-			GL11.glClearColor(color.getRed(), color.getGreen(), color.getBlue(), 1);
+			GL11.glClearColor((float)color.getRed()/255, (float)color.getGreen()/255, (float)color.getBlue()/255, 1);
 			
 			
 			Camera camera = getCurrentScene().camera;
 			camera.update();
 			
 			GL11.glPushMatrix();
+			
 			GL11.glTranslatef(-camera.x, -camera.y, -camera.z);
+
 			GL11.glColor3f(1, 0, 0);
 			GL11.glPointSize((float) 2.0);
 			
@@ -88,4 +95,9 @@ public class Main {
 	public static Scene getCurrentScene(){
 		return scenes.get(SCENEINDEX);
 	}
+	
+	public static World getCurrentWorld(){
+		return (World) scenes.get(SCENEINDEX);
+	}
+	
 }
