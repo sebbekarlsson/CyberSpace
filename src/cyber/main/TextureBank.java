@@ -10,6 +10,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 public class TextureBank {
 	
 	public static Texture TEST = loadTexture("png","graphics/shiip.png");
+	public static Texture ANDROSS = loadTexture("png", "graphics/wickberg.png");
 	
 	public static Texture loadTexture(String type, String path){
 		Texture t = null;

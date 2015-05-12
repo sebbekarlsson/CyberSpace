@@ -15,6 +15,7 @@ public class Sprite {
 	}
 	
 	public void draw(){
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		Texture t = getCurrent();
 		t.bind();
 		GL11.glBegin(GL11.GL_QUADS);

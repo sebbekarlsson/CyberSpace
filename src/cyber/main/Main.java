@@ -38,12 +38,13 @@ public class Main {
 		}
 
 		
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
 		
-		GLU.gluPerspective((float)45.0f,((float)(Display.getWidth())) / ((float)(Display.getHeight())), 0.001f, 1000f);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glAlphaFunc(GL11.GL_GREATER, 0.5f);
+		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		GL11.glLoadIdentity();
 
 		scenes.add(new World());
@@ -57,6 +58,7 @@ public class Main {
 			
 			
 			Camera camera = getCurrentScene().camera;
+			camera.update();
 			
 			GL11.glPushMatrix();
 			GL11.glTranslatef(-camera.x, -camera.y, -camera.z);
@@ -72,7 +74,6 @@ public class Main {
 			
 			getCurrentScene().update();
 		
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
 	
 			GL11.glPopMatrix();
 			

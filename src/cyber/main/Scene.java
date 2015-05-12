@@ -17,6 +17,8 @@ public abstract class Scene {
 			Instance instance = instances.get(i);
 			instance.update();
 		}
+		tick();
+		draw();
 	}
 	
 	public void instantiate(Instance instance){
@@ -28,4 +30,7 @@ public abstract class Scene {
 		instance.onDestroy();
 		instances.remove(instance);
 	}
+	
+	public abstract void tick();
+	public abstract void draw();
 }
