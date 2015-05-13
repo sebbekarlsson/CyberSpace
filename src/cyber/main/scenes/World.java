@@ -1,14 +1,13 @@
-package cyber.main.test;
+package cyber.main.scenes;
 
 import java.util.Random;
 
 import org.lwjgl.util.Color;
-import org.lwjgl.util.glu.GLU;
 
 import cyber.main.Scene;
+import cyber.main.Util;
+import cyber.main.entities.Cloud;
 import cyber.main.entities.Player;
-import cyber.main.instances.tile.GroundTile;
-import cyber.main.instances.tile.TileType;
 
 
 public class World extends Scene {
@@ -20,22 +19,16 @@ public class World extends Scene {
 	public void init() {
 		instantiate(player);
 		backgroundColor = new Color(111,210,237);
-		
-		float w_width = 4*9;
-		float w_length = 4*64;
-		
-		for(int x = 0; x < w_width; x++){
-			for(int y = 0; y < w_length; y++ ){
-				GroundTile tile = new GroundTile((x*4)-(w_width*4)/2, -7f, (y*4)-(w_width*4), TileType.WATER);
-				instantiate(tile);
-			}
-		}
 	}
 
 	@Override
 	public void tick() {
-		camera.z = player.z+4f;
-		camera.y = player.y+1f;
+		if(random.nextInt(10) == 0){
+			instantiate(new Cloud((camera.x+random.nextFloat()*64)*Util.chooseInt(1, -1), camera.y-7f, camera.z-64f));
+		}
+		
+		camera.z = player.z+3f;
+		camera.y = player.y+2.5f;
 	
 	}
 

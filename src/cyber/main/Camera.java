@@ -7,7 +7,8 @@ import org.lwjgl.util.glu.GLU;
 
 public class Camera {
 	public float x,y,z = 0f;
-	public float fov = 45.0f;
+	public float fov = 90.0f;
+	public float xrot = 20f;
 
 	
 	public void update(){
@@ -24,6 +25,6 @@ public class Camera {
 		GL11.glLoadIdentity();
 		
 		GLU.gluPerspective((float)fov,((float)(Display.getWidth())) / ((float)(Display.getHeight())), 0.001f, 1000f);
-		
+		//GL11.glRotatef(xrot, 1, 0, 0);
 	}
 }

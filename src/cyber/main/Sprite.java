@@ -41,16 +41,16 @@ public class Sprite {
 		GL11.glColor3f(1, 1, 1);
 		GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex3f(-t.getWidth()/2, -t.getHeight()/2, 0);
+			GL11.glVertex3f(-t.getWidth()/2, 0, -t.getHeight()/2);
 			
 			GL11.glTexCoord2f(t.getWidth(), 0);
-			GL11.glVertex3f(t.getWidth()/2, -t.getHeight()/2, 0);
+			GL11.glVertex3f(t.getWidth()/2, 0, -t.getHeight()/2);
 			
 			GL11.glTexCoord2f(t.getWidth(), t.getHeight());
-			GL11.glVertex3f(t.getWidth()/2, t.getHeight()/2, 0);
+			GL11.glVertex3f(t.getWidth()/2, 0, t.getHeight()/2);
 			
 			GL11.glTexCoord2f(0, t.getHeight());
-			GL11.glVertex3f(-t.getWidth()/2, t.getHeight()/2, 0);
+			GL11.glVertex3f(-t.getWidth()/2, 0, t.getHeight()/2);
 			
 			
 		GL11.glEnd();

@@ -12,6 +12,7 @@ public class TextureBank {
 	public static Texture AIRPLANE_PLAYER = loadTexture("png","graphics/airplane.png");
 	public static Texture ANDROSS = loadTexture("png", "graphics/grass.png");
 	public static Texture TILE_WATER = loadTexture("png", "graphics/water.png");
+	public static Texture CLOUD = loadTexture("png", "graphics/cloud.png");
 	
 	public static Texture loadTexture(String type, String path){
 		Texture t = null;

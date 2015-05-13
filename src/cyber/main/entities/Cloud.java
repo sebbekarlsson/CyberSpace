@@ -1,17 +1,16 @@
-package cyber.main.test;
+package cyber.main.entities;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 
 import cyber.main.Entity;
 import cyber.main.Main;
+import cyber.main.TextureBank;
 
-public class Star extends Entity {
-	public Color color = new Color(255,255,255);
-	
-	public Star(float x, float y, float z) {
+public class Cloud extends Entity {
+
+	public Cloud(float x, float y, float z) {
 		super(x, y, z);
-		// TODO Auto-generated constructor stub
+		sprite.textures.add(TextureBank.CLOUD);
 	}
 
 	@Override
@@ -25,12 +24,11 @@ public class Star extends Entity {
 	@Override
 	public void draw() {
 		GL11.glPushMatrix();
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glTranslatef(x, y, z);
-		GL11.glColor3f(color.getRed()/255, color.getGreen()/255, color.getBlue()/255);
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL11.glBegin(GL11.GL_POINTS);
-		GL11.glVertex2f(0, 0);
-		GL11.glEnd();
+		GL11.glScalef(16, 16, 16);
+		sprite.drawCenter();
+		
 		GL11.glPopMatrix();
 		
 	}

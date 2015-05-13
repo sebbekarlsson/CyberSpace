@@ -1,20 +1,16 @@
 package cyber.main;
 
 import java.awt.Dimension;
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
-import org.lwjgl.util.glu.GLU;
 
-import cyber.main.entities.Player;
-import cyber.main.test.World;
+import cyber.main.scenes.World;
 
 public class Main {
 	public static int WIDTH = 640;
@@ -62,17 +58,11 @@ public class Main {
 			GL11.glClearColor((float)color.getRed()/255, (float)color.getGreen()/255, (float)color.getBlue()/255, 1);
 			
 			
-			Camera camera = getCurrentScene().camera;
-			camera.update();
+			getCurrentScene().camera.update();
 			
 			GL11.glPushMatrix();
 			
-			GL11.glTranslatef(-camera.x, -camera.y, -camera.z);
-
-			GL11.glColor3f(1, 0, 0);
-			GL11.glPointSize((float) 2.0);
-			
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
+			GL11.glTranslatef(-getCurrentScene().camera.x, -getCurrentScene().camera.y, -getCurrentScene().camera.z);
 			
 			if(getCurrentScene().init == false){
 				getCurrentScene().init();
